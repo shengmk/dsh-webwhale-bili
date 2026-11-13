@@ -11,7 +11,7 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
 - **Computer Use（实验，默认关闭）**：`computerExperimental=false`；日常关注/取关禁止走 CU，只走 `follow.request` + API。开启实验后才允许动作队列：安全动作 60 秒 token，危险动作每次弹窗。
 - **依赖检查**：首次配置/体检会检查 qrcode、ffmpeg、node；qrcode 缺失可一键 npm 安装，ffmpeg 只检测不静默下载。
 - **自动回复（B 模式）**：`lib/auto-reply.js` 每 90 秒轮询私信；主人 + 已知互关低风险直回，其他低风险进审查，高风险进确认；非主人 @ 忽略。首次启动只建立基线，不回旧消息；同一发送者 10 分钟冷却；kill switch 立即停。
-- **真实写桥（受控）**：`lib/bili-write.js` 提供私信发送、关注、视频评论；裸 `bili.sendDm` / `bili.postComment` RPC 已移除，私信只走 B 模式自动回复，关注只走 request/approve/execute。2026-11-13 经用户明确授权，向 `星语枫晚` 发出测试私信并在 `BV18y8j6GEAv` 发出回复评论，均已回读确认。
+- **真实写桥（受控）**：`lib/bili-write.js` 提供私信发送、关注、视频评论；裸 `bili.sendDm` / `bili.postComment` RPC 已移除，私信只走 B 模式自动回复，关注只走 request/approve/execute。测试账号与目标不在文档中暴露。
 - **真实只读数据桥**：登录后宿主用 `nav` 取账号、`x/msgfeed/reply` 取「回复我的」，并读取最近投稿列表（WBI 签名，只读）；互动 tab 显示真实回复、视频链接与投稿；支持输入 BV 号读取指定视频评论，并把单条评论「存为草稿」到内容库；全部只发 GET，不写 B站。
 - 体检卡实时探测 Node/ffmpeg/凭据/登录态/数据目录/kill switch；ffmpeg 找不到时才提示安装。
 - **A3–A6 本地闭环**：新建/改稿/提交审批/通过/驳回（原因必填）；审批绑定 content_id+version，改稿后旧审批持久化 `approval_stale`；kill switch 一开所有写 RPC 拒绝，恢复需要服务端一次性 challenge。

@@ -17,10 +17,10 @@ ok(initial.owners.members.length === 0, 'owners must start empty')
 
 let saved = store.setOwners({
   activeSource: 'manual',
-  members: [{ mid: '3690993452845486', name: '辉夜鲸', source: 'manual' }],
+  members: [{ mid: '123456789', name: '测试账号', source: 'manual' }],
 }).value
 ok(saved.owners.activeSource === 'manual', 'manual source must persist')
-ok(saved.owners.members.length === 1 && saved.owners.members[0].mid === '3690993452845486', 'manual owner must persist')
+ok(saved.owners.members.length === 1 && saved.owners.members[0].mid === '123456789', 'manual owner must persist')
 ok(saved.logs[0][1] === '更新主人名单', 'owner save must append audit')
 
 ok(codeOf(() => store.setOwners({ activeSource: 'bogus', members: [] })) === 'bad-request', 'invalid source must be rejected')
