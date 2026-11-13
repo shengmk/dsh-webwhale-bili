@@ -12,6 +12,7 @@ ok(classifyReply({ source: 'at', fromMid: '999', text: '在吗', owners }).mode 
 ok(classifyReply({ source: 'comment', fromMid: '999', text: '这个插件叫什么', owners }).mode === 'review', 'non-owner low-risk comment must go to review')
 ok(classifyReply({ source: 'dm', fromMid: '999', text: '能合作吗', owners }).mode === 'review', 'non-owner low-risk DM must go to review')
 ok(classifyReply({ source: 'dm', fromMid: '999', text: '你好呀', owners, knownMids: ['999'] }).mode === 'direct', 'known mutual low-risk DM must be direct in B mode')
+ok(classifyReply({ source: 'at', fromMid: '999', text: '你好呀', owners, knownMids: ['999'] }).mode === 'direct', 'known mutual @ must be treated as owner')
 ok(classifyReply({ source: 'at', fromMid: '123', text: '今晚看什么', owners }).mode === 'direct', 'owner low-risk must be direct')
 ok(classifyReply({ source: 'dm', fromMid: '123', text: '看 https://example.com', owners }).mode === 'confirm', 'owner link must require confirmation')
 ok(classifyReply({ source: 'comment', fromMid: '999', text: '转账返利', owners }).mode === 'confirm', 'non-owner sensitive must require confirmation')
