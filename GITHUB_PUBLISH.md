@@ -1,11 +1,28 @@
-# GitHub 发布清单（下一次对话）
+# GitHub 发布清单
 
-## 代码
+**已发布（2026-11-13）**
 
-- [ ] 在 `dsh-webwhale-bili/` 执行 `git init`
-- [ ] 提交源码：`lib/`、`scripts/`、`README.md`、`MIGRATION.md`、`CHANGELOG.md`、`RELEASE_NOTES.md`、`LICENSE`、`package.json`、`cordis.patch.yml`
-- [ ] 不提交：`node_modules/`、`state.db`、`state.json`、`credentials.json`、`dev_id`、`release/`
-- [ ] 确认 `.gitignore` 生效
+- 仓库：https://github.com/shengmk/dsh-webwhale-bili
+- Tag：v0.1.0
+- Release：https://github.com/shengmk/dsh-webwhale-bili/releases/tag/v0.1.0
+- 附件：`dsh-webwhale-bili-0.1.0-source.zip`
+- 本地 main 已推送，远程 main 一致
+
+## 发布后核验
+
+```bash
+git ls-remote --tags origin
+curl -s https://api.github.com/repos/shengmk/dsh-webwhale-bili/releases/latest
+```
+
+## 重新发布
+
+- 修改 `package.json` 版本
+- 更新 `CHANGELOG.md` / `RELEASE_NOTES.md`
+- 跑 `npm test`、`npm run verify:migration`、`npm run verify:install`
+- 重建 zip，打新 tag，push，上传 asset
+
+## 历史清单（首次发布前）
 
 ## 发布前验证
 
@@ -31,8 +48,12 @@ npm run verify:install
 - 旧库迁移：`MIGRATION.md`
 - 切号需重载 DSH
 
-## 未闭合
+## 当前状态
 
-- Codex 最终 PASS 未取得
-- 真实 B站按钮测试已在 `computer-use.md` 记录；但执行器仍未接入自动流程
-- 仓库尚无 `.git`，首次发布需新建
+- 仓库已创建并推送 main
+- Tag `v0.1.0` 已推送
+- Release 与 zip 已上传
+- 迁移/安装检测通过
+- Codex 终审：PASS-WITH-FIXES；修复后未再跑完整 PASS
+- 真实 B站按钮测试记录在 `evidence/computer-use.md`
+- Computer Use 默认关闭，不接日常关注

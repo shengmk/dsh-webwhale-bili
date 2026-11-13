@@ -10,3 +10,4 @@ dev_id
 *.log
 dist/
 release/
+/CON
