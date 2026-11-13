@@ -17,9 +17,82 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
 - **A3–A6 本地闭环**：新建/改稿/提交审批/通过/驳回（原因必填）；审批绑定 content_id+version，改稿后旧审批持久化 `approval_stale`；kill switch 一开所有写 RPC 拒绝，恢复需要服务端一次性 challenge。
 - 写 RPC 要求 owner 浏览器 principal（`browserPeer`/`connection.admit`）；model/tool peer 不能审批。真实发布永久关闭。
 
-## 安装
+## 安装（普通用户）
 
-要求：DSH Desktop `>=0.2.2-rc.1 <0.3.0`、Node.js `>=22`。
+### 环境
+
+- DSH Desktop `>=0.2.2-rc.1 <0.3.0`
+- Node.js `>=22`
+- Windows 10/11 优先（Computer Use 执行器仅 Windows）
+- ffmpeg 可选：只影响抽帧/封面处理
+
+### 从 GitHub 安装
+
+1. 打开 Release：
+
+   <https://github.com/shengmk/dsh-webwhale-bili/releases>
+
+2. 下载最新源码 zip，例如：
+
+   ```text
+   dsh-webwhale-bili-0.1.14-source.zip
+   ```
+
+3. 解压到一个固定目录，例如：
+
+   ```text
+   D:\Tools\dsh-webwhale-bili
+   ```
+
+4. 在解压目录安装扫码依赖：
+
+   ```bash
+   cd D:\Tools\dsh-webwhale-bili
+   npm install --omit=dev
+   ```
+
+5. DSH Desktop → 设置 → 插件 → 添加插件：
+
+   - 选择本地 bundle / 目录
+   - 或输入：
+
+     ```text
+     link:D:\Tools\dsh-webwhale-bili
+     ```
+
+6. 启用 `dsh-webwhale-bili`，重启 DSH / 重载插件。
+
+7. 刷新页面，左侧应出现「B站工作台」。
+
+8. 首次打开按引导：
+
+   - 依赖检查（qrcode / ffmpeg / node）
+   - 扫码登录
+   - 设置主人、人格、自动回复
+   - 进入工作台
+
+### 升级
+
+- 下载新 Release zip，覆盖原目录
+- 保留 `~/.dsh/webwhale-bili/` 数据目录
+- 重新 `npm install --omit=dev`
+- 重启 DSH
+- 旧库会自动迁移，见 [MIGRATION.md](MIGRATION.md)
+
+### 卸载
+
+- DSH 插件管理里停用/移除插件
+- 数据默认保留在 `~/.dsh/webwhale-bili/`
+- 如需彻底清除，再手动删除该目录
+
+### 安全
+
+- 凭据只存本机 `~/.dsh/webwhale-bili/credentials.json`（0600）
+- 不记录 `SESSDATA` / `bili_jct`
+- 真实发送/关注/发布受控；默认不会自动发布
+- Computer Use 默认关闭
+
+## 本机开发安装
 
 ```bash
 cd dsh-webwhale-bili
