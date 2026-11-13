@@ -26,7 +26,7 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
 - Windows 10/11 优先（Computer Use 执行器仅 Windows）
 - ffmpeg 可选：只影响抽帧/封面处理
 
-### 用 DSH 插件管理安装（推荐）
+### 方式 A：DSH 插件管理装 GitHub（推荐）
 
 不需要先下载 zip。
 
@@ -42,7 +42,7 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
    https://github.com/shengmk/dsh-webwhale-bili
    ```
 
-   或使用安装标识：
+   如果界面支持简写，也可以用：
 
    ```text
    github:shengmk/dsh-webwhale-bili
@@ -63,9 +63,25 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
    - 设置主人、人格、自动回复
    - 进入工作台
 
-> 如果 DSH 版本的插件页没有“从 GitHub 安装”入口，再用下面的离线 zip 方式。
+### 方式 B：npm 包
 
-### 离线 zip 安装（备用）
+已发布：
+
+<https://www.npmjs.com/package/dsh-webwhale-bili>
+
+DSH 插件管理输入：
+
+```text
+dsh-webwhale-bili
+```
+
+如果当前 npm 的 staging 占位版本导致短名解析失败，改用明确版本：
+
+```text
+dsh-webwhale-bili@0.1.14
+```
+
+### 方式 C：离线 zip（备用）
 
 1. 打开 Release：
 
@@ -105,11 +121,19 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
 
 ### 升级
 
+推荐直接用 DSH 插件管理：
+
+- `dsh-webwhale-bili` 有新版本时重新安装/更新
+- 保留数据目录 `~/.dsh/webwhale-bili/`
+- 重启 DSH
+- 旧库自动迁移，见 [MIGRATION.md](MIGRATION.md)
+
+离线包升级：
+
 - 下载新 Release zip，覆盖原目录
 - 保留 `~/.dsh/webwhale-bili/` 数据目录
 - 重新 `npm install --omit=dev`
 - 重启 DSH
-- 旧库会自动迁移，见 [MIGRATION.md](MIGRATION.md)
 
 ### 卸载
 
