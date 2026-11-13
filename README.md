@@ -26,7 +26,46 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
 - Windows 10/11 优先（Computer Use 执行器仅 Windows）
 - ffmpeg 可选：只影响抽帧/封面处理
 
-### 从 GitHub 安装
+### 用 DSH 插件管理安装（推荐）
+
+不需要先下载 zip。
+
+1. 打开 DSH Desktop：
+
+   ```text
+   设置 → 插件 → 添加插件
+   ```
+
+2. 粘贴 GitHub 仓库地址：
+
+   ```text
+   https://github.com/shengmk/dsh-webwhale-bili
+   ```
+
+   或使用安装标识：
+
+   ```text
+   github:shengmk/dsh-webwhale-bili
+   ```
+
+3. 等待 DSH 完成安装/依赖安装。
+
+4. 启用 `dsh-webwhale-bili`。
+
+5. 重启 DSH（bundle 层需要重启一次）。
+
+6. 刷新页面，左侧应出现「B站工作台」。
+
+7. 首次打开按引导：
+
+   - 依赖检查（qrcode / ffmpeg / node）
+   - 扫码登录
+   - 设置主人、人格、自动回复
+   - 进入工作台
+
+> 如果 DSH 版本的插件页没有“从 GitHub 安装”入口，再用下面的离线 zip 方式。
+
+### 离线 zip 安装（备用）
 
 1. 打开 Release：
 
@@ -63,13 +102,6 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
 6. 启用 `dsh-webwhale-bili`，重启 DSH / 重载插件。
 
 7. 刷新页面，左侧应出现「B站工作台」。
-
-8. 首次打开按引导：
-
-   - 依赖检查（qrcode / ffmpeg / node）
-   - 扫码登录
-   - 设置主人、人格、自动回复
-   - 进入工作台
 
 ### 升级
 
