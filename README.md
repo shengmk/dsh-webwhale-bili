@@ -8,7 +8,7 @@ B站账号自运营工作台（DSH 嵌入页）· **0.1.0 可发布版**。
 - 评论/回复带视频的条目渲染 `视频《…》` 外链，新窗口打开。
 - 主页面：总控制台 12 项 + 养鱼/创作/设置 3 张可用卡 + 3 张待接入占位；点卡进面板内二级页，可返回。
 - **主人授权**：`owners.activeSource` 全局单选手动/互关；成员带 source 标签；`bili.mutual` 只读互关；关注必须 request/approve 后执行。
-- **Computer Use 授权**：导航/点赞等安全动作可申请 60 秒一次性 token；发送/关注/删除/发布必须每次弹窗。`computer.preview` 分档，`computer.authorize`/`computer.consume` 管短时 token。
+- **Computer Use（实验，默认关闭）**：`computerExperimental=false`；日常关注/取关禁止走 CU，只走 `follow.request` + API。开启实验后才允许动作队列：安全动作 60 秒 token，危险动作每次弹窗。
 - **依赖检查**：首次配置/体检会检查 qrcode、ffmpeg、node；qrcode 缺失可一键 npm 安装，ffmpeg 只检测不静默下载。
 - **自动回复（B 模式）**：`lib/auto-reply.js` 每 90 秒轮询私信；主人 + 已知互关低风险直回，其他低风险进审查，高风险进确认；非主人 @ 忽略。首次启动只建立基线，不回旧消息；同一发送者 10 分钟冷却；kill switch 立即停。
 - **真实写桥（受控）**：`lib/bili-write.js` 提供私信发送、关注、视频评论；裸 `bili.sendDm` / `bili.postComment` RPC 已移除，私信只走 B 模式自动回复，关注只走 request/approve/execute。2026-11-13 经用户明确授权，向 `星语枫晚` 发出测试私信并在 `BV18y8j6GEAv` 发出回复评论，均已回读确认。

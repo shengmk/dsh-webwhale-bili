@@ -9,6 +9,10 @@ import { spawnSync } from 'node:child_process'
 
 const directory = process.env.WW_DIR || activeDirectory()
 const store = createStore(directory)
+if (store.getState().value.settings.computerExperimental !== true) {
+  console.log('computer-exec: refused, Computer Use experimental is disabled')
+  process.exit(1)
+}
 if (store.isKilled()) {
   console.log('computer-exec: refused, kill switch is on')
   process.exit(1)
