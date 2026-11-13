@@ -1,0 +1,5 @@
+# dsh-webwhale-bili — bundle patch
+# 只挂一行宿主插件；客户端 bundle 由 dsh.client 声明后在浏览器侧加载。
+- insert:
+    - id: webwhale-bili
+      name: dsh-webwhale-bili

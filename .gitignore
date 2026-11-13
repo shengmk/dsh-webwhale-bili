@@ -1,0 +1,12 @@
+node_modules/
+*.db
+*.db-wal
+*.db-shm
+state.json
+credentials.json
+dev_id
+.env
+.env.*
+*.log
+dist/
+release/

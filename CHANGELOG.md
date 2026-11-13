@@ -1,0 +1,31 @@
+# Changelog
+
+## 0.1.0 — 2026-11-13
+
+首个可发布版本。
+
+### 已实现
+
+- B站工作台：主页、养鱼、创作、设置、体检
+- 互动：私信回复 + @ 合并、视频链接/封面/头像
+- 主人：手动/互关，`attribute=6` 判定
+- 自动回复 B 模式：90 秒轮询、direct/review/confirm/ignore、冷却、kill 与账号代际 guard
+- 内容：图文/视频草稿、审批
+- 多账号：最多 5 个、独立目录、独立扫码、切号写 409（需重载）
+- 关注：request → approve → execute → executed/failed/unknown，每日限额，审计同事务
+- Computer Use：动作队列、安全 60 秒 token、危险动作弹窗、原子领取、Windows 执行器、watch
+- 依赖：qrcode/ffmpeg/node 检查；qrcode 一键安装；ffmpeg 只检测
+
+### 已知限制
+
+- 切号必须重载插件/重启 DSH，不是热切换
+- Computer Use 执行器不是常驻服务
+- B站重新关注可能触发短信验证
+- 最终 Codex 复审未取得 PASS
+
+### 安全
+
+- 不记录 SESSDATA / bili_jct
+- 凭据仅本机 0600
+- kill switch 开启时拒绝写
+- 真实发送/关注受控

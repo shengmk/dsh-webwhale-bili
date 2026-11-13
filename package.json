@@ -1,0 +1,51 @@
+{
+  "name": "dsh-webwhale-bili",
+  "version": "0.1.0",
+  "description": "B站账号自运营工作台（DSH 嵌入页）：互动、自动回复、图文草稿、多账号隔离、受控关注与 Computer Use 动作队列。",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "scripts",
+    "cordis.patch.yml",
+    "README.md",
+    "MIGRATION.md",
+    "CHANGELOG.md",
+    "RELEASE_NOTES.md",
+    "GITHUB_PUBLISH.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "dsh": ">=0.2.2-rc.1 <0.3.0",
+    "node": ">=22"
+  },
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale"
+      ]
+    }
+  },
+  "scripts": {
+    "test": "node scripts/gate-check.mjs",
+    "verify:bundle": "node scripts/verify-bundle.mjs",
+    "verify:skeleton": "node scripts/verify-skeleton.mjs",
+    "verify:migration": "node scripts/verify-migration.mjs",
+    "verify:install": "node scripts/verify-install.mjs",
+    "review:codex": "node scripts/codex-review.mjs"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}
