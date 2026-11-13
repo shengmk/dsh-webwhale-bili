@@ -23,6 +23,11 @@ if (!action) {
   console.log('computer-exec: no approved action')
   process.exit(0)
 }
+if (action.action !== 'scroll' || /(关注|取关|follow|unfollow)/i.test(action.label)) {
+  store.completeComputerAction(action.id, false)
+  console.log('computer-exec: refused, only scroll actions are enabled while Computer Use is experimental')
+  process.exit(1)
+}
 const policy = classifyComputerAction({ action: action.action, label: action.label })
 if (policy.mode !== 'allow' && !((action.risk === 'danger' || action.risk === 'confirm') && action.confirmedAt)) {
   store.completeComputerAction(action.id, false)
