@@ -24,11 +24,27 @@ try {
   try { store.setSettings({ unknownKey: 'x' }) } catch { rejected = true }
   ok(rejected, 'unknown setting must be rejected')
 
-  const queued = store.queueReply({ source: 'dm', fromMid: '123456', text: '测试消息' })
+  store.setAccount({ mid: '999', name: '测试账号', authenticated: true })
+  const queued = store.queueReply({ source: 'dm', fromMid: '123456', text: '测试消息', reply: '测试草稿', msgId: 'm-store-1' })
   ok(queued.item && queued.item.status === 'pending', 'queueReply should create a pending review item')
+  ok(queued.item.reply === '测试草稿', 'queueReply should store the draft reply')
   const decided = store.decideReply(queued.item.id, 'approve')
   ok(decided.value.replyQueue.find((item) => item.id === queued.item.id)?.status === 'approved', 'decideReply should approve the item')
   ok(decided.value.logs[0][1] === '回复通过', 'decideReply should append audit')
+  const sentApproved = store.sendApprovedReply(queued.item.id)
+  ok(sentApproved.ok === true, 'sendApprovedReply should enqueue an approved reply with draft')
+  const accountId = sentApproved.state?.value?.account?.mid
+  ok(store.listOutbox(accountId).some((item) => item.msgId === 'm-store-1' && item.text === '测试草稿'), 'approved reply draft must be in outbox')
+
+  const noDraft = store.queueReply({ source: 'dm', fromMid: '123456', text: '无草稿消息' })
+  store.decideReply(noDraft.item.id, 'approve')
+  const blocked = store.sendApprovedReply(noDraft.item.id)
+  ok(blocked.ok === false && /draft is empty/.test(blocked.reason), 'approved reply without draft must not enqueue')
+
+  const commentReview = store.queueReply({ source: 'comment', fromMid: '123456', text: '评论审查', reply: '评论草稿', msgId: 'm-comment-1' })
+  store.decideReply(commentReview.item.id, 'approve')
+  const commentBlocked = store.sendApprovedReply(commentReview.item.id)
+  ok(commentBlocked.ok === false && /only DM/.test(commentBlocked.reason), 'comment review must not use the DM sender')
 
   const reopened = createStore(dir)
   const persisted = reopened.getState().value
