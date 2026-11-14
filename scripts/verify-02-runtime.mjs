@@ -24,6 +24,12 @@ try {
   store.completeOutbox(claimed.id, 'sent')
   ok(store.listOutbox('100')[0].status === 'sent', 'outbox must persist sent status')
 
+  const commentQueue = store.enqueueOutbox({ accountId: '100', talkerId: '300', msgId: 'c1', msgAt: 11, kind: 'comment', target: { bvid: 'BV1GJ411x7h7', root: '9', parent: '9' }, text: 'comment reply', nextAt: new Date(0).toISOString() })
+  ok(commentQueue.item?.kind === 'comment', 'comment outbox kind must persist')
+  const commentClaim = store.claimOutbox('100', 'comment')
+  ok(commentClaim && commentClaim.kind === 'comment' && commentClaim.target.includes('BV1GJ411x7h7'), 'comment outbox claim must return target')
+  store.completeOutbox(commentClaim.id, 'sent')
+
   const reopened = createStore(dir)
   ok(reopened.claimInbox(inbound) === false, 'inbox idempotency must survive reopen')
   ok(reopened.listOutbox('100')[0].status === 'sent', 'outbox status must survive reopen')
