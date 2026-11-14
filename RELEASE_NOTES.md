@@ -1,4 +1,14 @@
-# 🐟 dsh-webwhale-bili v0.1.16
+# 🐟 dsh-webwhale-bili v0.2.13
+
+## 🆕 v0.2.13 修复
+
+- 修复私信自动回复队列一直 pending：worker `generation` 未定义
+- 修复 `sendDm` / `followUser` 引用未定义 `root` 导致发送前异常
+- DM 与评论改为独立冷却、独立重复文本判断
+- 新增 `verify-02-worker-guard.mjs`，防止同类作用域错误回归
+- 真实私信测试：辉夜鲸 → 星语枫晚，已发送
+
+## 🐟 dsh-webwhale-bili v0.1.16
 
 > 把 B站账号的日常运营，收进一个 DSH 工作台：看互动、回私信、写图文、管账号、受控关注。
 >
