@@ -12,7 +12,7 @@ const dir = mkdtempSync(join(tmpdir(), 'ww-store-'))
 try {
   const store = createStore(dir)
   const initial = store.getState().value
-  ok(initial.pending.length === 2, 'seed should contain 2 pending items')
+  ok(initial.pending.length === 0, 'fresh store must not contain demo pending items')
   ok(initial.settings.skipProb === '30%', 'seed settings should contain skipProb=30%')
 
   const saved = store.setSettings({ skipProb: '35%', dmListen: false })
@@ -24,14 +24,16 @@ try {
   try { store.setSettings({ unknownKey: 'x' }) } catch { rejected = true }
   ok(rejected, 'unknown setting must be rejected')
 
-  const approved = store.approve('p1')
-  ok(approved.value.pending.length === 1, 'approve should remove one pending item')
-  ok(approved.value.logs[0][1] === '审批通过', 'approve should append audit')
+  const queued = store.queueReply({ source: 'dm', fromMid: '123456', text: '测试消息' })
+  ok(queued.item && queued.item.status === 'pending', 'queueReply should create a pending review item')
+  const decided = store.decideReply(queued.item.id, 'approve')
+  ok(decided.value.replyQueue.find((item) => item.id === queued.item.id)?.status === 'approved', 'decideReply should approve the item')
+  ok(decided.value.logs[0][1] === '回复通过', 'decideReply should append audit')
 
   const reopened = createStore(dir)
   const persisted = reopened.getState().value
   ok(persisted.settings.skipProb === '35%', 'settings must survive reopen')
-  ok(persisted.pending.length === 1, 'pending must survive reopen')
+  ok(persisted.replyQueue.find((item) => item.id === queued.item.id)?.status === 'approved', 'reply queue must survive reopen')
 
   if (failures.length > 0) {
     console.error('verify-store: FAIL')

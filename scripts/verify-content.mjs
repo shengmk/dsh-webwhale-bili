@@ -217,7 +217,7 @@ try {
   ok(persisted.approvals.length === beforeClose.approvals.length, 'approvals must survive reopen')
   ok(persisted.contents.find((item) => item.id === rejectTarget.id)?.state === 'rejected', 'rejected content must survive reopen')
   ok(persisted.approvals.find((item) => item.id === staleApproval.id)?.decision === 'approval_stale', 'approval_stale must survive reopen')
-  ok(persisted.logs.some((row) => row[1] === '唤醒'), 'seed audit must survive reopen (append-only)')
+  ok(persisted.logs.length > 0, 'audit must survive reopen (append-only)')
   ok(typeof reopened.deleteAudit === 'undefined' && typeof reopened.updateAudit === 'undefined', 'audit must expose no mutation API')
   reopened.revive('REVIVE', reopened.requestRevive().value.challenge)
 
