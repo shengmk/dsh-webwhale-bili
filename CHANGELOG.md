@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.14 — 2026-11-14
+
+- 每条私信独立回复：移除“每会话只处理一条”限制
+- 同一轮多条消息逐条入 outbox；新消息不再被 20 分钟冷却丢弃
+- 新增独立 `model-chat.json` 持久化模型会话，带人设与上下文
+- DeepSeek API key 仅从 DSH credentials 读取；失败回退人格模板 / 短确认
+- 新增 `verify-02-model.mjs`；gate PASS
+- 真实观察：模型已对 4 个会话生成回复
+
 ## 0.2.13 — 2026-11-14
 
 - 修复私信自动回复未发送：`generation` 作用域、`sendDm`/`followUser` 未定义 `root`、DM/评论共用冷却与重复文本
