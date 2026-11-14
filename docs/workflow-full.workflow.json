@@ -1,0 +1,329 @@
+{
+  "schema_version": 2,
+  "diagram_type": "workflow",
+  "meta": {
+    "title": "dsh-webwhale-bili 全模块工作流",
+    "subtitle": "回复 · 人格 · 记忆 · 创作 · 素材 · 审计 · 运行边界",
+    "quality_profile": "showcase",
+    "locale": "zh-CN",
+    "views": [
+      {
+        "id": "reply",
+        "label": "回复链路",
+        "focus": [
+          "owner",
+          "ui",
+          "api",
+          "auto",
+          "policy",
+          "cap",
+          "send",
+          "memory",
+          "audit"
+        ],
+        "note": "主人触发、策略分类、频率硬约束、发送与记录。"
+      },
+      {
+        "id": "persona",
+        "label": "人格与记忆",
+        "focus": [
+          "ui",
+          "persona",
+          "memory",
+          "api"
+        ],
+        "note": "默认/外部人格文件、短期/长期记忆。"
+      },
+      {
+        "id": "creation",
+        "label": "创作链路",
+        "focus": [
+          "ui",
+          "content",
+          "scheduler",
+          "api"
+        ],
+        "note": "图文/视频/直播输入、审查、缺失的调度器。"
+      }
+    ]
+  },
+  "lanes": [
+    {
+      "id": "surface",
+      "label": "交互面"
+    },
+    {
+      "id": "runtime",
+      "label": "运行时与策略"
+    },
+    {
+      "id": "creation",
+      "label": "创作与素材"
+    },
+    {
+      "id": "evidence",
+      "label": "外部与证据"
+    },
+    {
+      "id": "ops",
+      "label": "审计"
+    }
+  ],
+  "phases": [
+    {
+      "id": "open",
+      "label": "打开与审阅",
+      "fromCol": 0,
+      "toCol": 1
+    },
+    {
+      "id": "decide",
+      "label": "策略与约束",
+      "fromCol": 2,
+      "toCol": 3,
+      "variant": "emphasis"
+    },
+    {
+      "id": "act",
+      "label": "执行与记录",
+      "fromCol": 4,
+      "toCol": 5,
+      "variant": "dashed"
+    }
+  ],
+  "mainPath": [
+    "owner",
+    "ui",
+    "api",
+    "auto",
+    "policy",
+    "cap",
+    "send"
+  ],
+  "nodes": [
+    {
+      "id": "owner",
+      "lane": "surface",
+      "col": 0,
+      "type": "external",
+      "label": "主人",
+      "sublabel": "审阅 / 启动",
+      "width": 132
+    },
+    {
+      "id": "ui",
+      "lane": "surface",
+      "col": 1,
+      "type": "frontend",
+      "label": "DSH 工作台",
+      "sublabel": "主页 / 创作 / 素材 / 设置",
+      "width": 160
+    },
+    {
+      "id": "api",
+      "lane": "runtime",
+      "col": 2,
+      "type": "security",
+      "label": "RPC + Store",
+      "sublabel": "owner fence / kill / 409 / SQLite",
+      "width": 160
+    },
+    {
+      "id": "auto",
+      "lane": "runtime",
+      "col": 3,
+      "type": "backend",
+      "label": "自动回复",
+      "sublabel": "90s / 24h 补回 / 上下文",
+      "width": 150
+    },
+    {
+      "id": "policy",
+      "lane": "runtime",
+      "col": 4,
+      "type": "backend",
+      "label": "回复分档",
+      "sublabel": "主人 / 互关 / 风险 / ignore",
+      "width": 150
+    },
+    {
+      "id": "cap",
+      "lane": "runtime",
+      "col": 5,
+      "type": "security",
+      "label": "频率硬约束",
+      "sublabel": "1 条 / 20 分钟 / 8 条/天",
+      "tag": "回笼觉每天一次",
+      "width": 160
+    },
+    {
+      "id": "persona",
+      "lane": "creation",
+      "col": 3,
+      "type": "backend",
+      "label": "人格层",
+      "sublabel": "默认 + 多个外部 md/txt",
+      "width": 150
+    },
+    {
+      "id": "memory",
+      "lane": "evidence",
+      "col": 4,
+      "type": "database",
+      "label": "记忆",
+      "sublabel": "短期 7天 / 长期手动",
+      "width": 140
+    },
+    {
+      "id": "content",
+      "lane": "creation",
+      "col": 2,
+      "type": "backend",
+      "label": "内容 workflow",
+      "sublabel": "草稿 / 审批 / 用户审查",
+      "width": 150
+    },
+    {
+      "id": "scheduler",
+      "lane": "creation",
+      "col": 4,
+      "type": "security",
+      "label": "调度器（缺）",
+      "sublabel": "无持久 cron / 无补跑",
+      "width": 160
+    },
+    {
+      "id": "send",
+      "lane": "ops",
+      "col": 5,
+      "type": "cloud",
+      "label": "B站写",
+      "sublabel": "私信 / 关注 / 评论",
+      "width": 150
+    },
+    {
+      "id": "audit",
+      "lane": "ops",
+      "col": 4,
+      "type": "database",
+      "label": "审计与待办",
+      "sublabel": "append-only / 主页提醒",
+      "width": 150
+    }
+  ],
+  "edges": [
+    {
+      "id": "owner-ui",
+      "from": "owner",
+      "to": "ui",
+      "label": "打开",
+      "variant": "emphasis"
+    },
+    {
+      "id": "ui-api",
+      "from": "ui",
+      "to": "api",
+      "label": "RPC",
+      "variant": "emphasis"
+    },
+    {
+      "id": "api-auto",
+      "from": "api",
+      "to": "auto",
+      "label": "启动/轮询",
+      "variant": "default"
+    },
+    {
+      "id": "auto-policy",
+      "from": "auto",
+      "to": "policy",
+      "label": "上下文",
+      "variant": "default"
+    },
+    {
+      "id": "policy-persona",
+      "from": "policy",
+      "to": "persona",
+      "label": "语气",
+      "variant": "dashed"
+    },
+    {
+      "id": "policy-cap",
+      "from": "policy",
+      "to": "cap",
+      "label": "可直回",
+      "variant": "emphasis"
+    },
+    {
+      "id": "cap-send",
+      "from": "cap",
+      "to": "send",
+      "label": "通过",
+      "variant": "emphasis"
+    },
+    {
+      "id": "send-memory",
+      "from": "send",
+      "to": "memory",
+      "label": "记录",
+      "variant": "dashed"
+    },
+    {
+      "id": "send-audit",
+      "from": "send",
+      "to": "audit",
+      "label": "审计",
+      "variant": "dashed"
+    },
+    {
+      "id": "ui-content",
+      "from": "ui",
+      "to": "content",
+      "label": "创作",
+      "variant": "default"
+    },
+    {
+      "id": "content-api",
+      "from": "content",
+      "to": "api",
+      "label": "草稿/审批",
+      "variant": "default"
+    },
+    {
+      "id": "content-scheduler",
+      "from": "content",
+      "to": "scheduler",
+      "label": "未接",
+      "variant": "dashed"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "模块边界",
+      "items": [
+        "前端：client.js 单文件 UI",
+        "宿主：routes/store 单写",
+        "外部：bili-write 受控写"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "硬约束",
+      "items": [
+        "互关即主人；公开不 @ 主人",
+        "一轮 1 条；回笼觉/生命周期按天",
+        "CU 默认关闭；危险动作弹窗"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "缺口",
+      "items": [
+        "无持久调度器 / 关机即停",
+        "视频/直播发布未接",
+        "外部人格只本地读取"
+      ]
+    }
+  ]
+}
