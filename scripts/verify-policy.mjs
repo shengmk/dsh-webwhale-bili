@@ -16,6 +16,9 @@ ok(classifyReply({ source: 'at', fromMid: '999', text: '你好呀', owners, know
 ok(classifyReply({ source: 'at', fromMid: '123', text: '今晚看什么', owners }).mode === 'direct', 'owner low-risk must be direct')
 ok(classifyReply({ source: 'dm', fromMid: '123', text: '看 https://example.com', owners }).mode === 'confirm', 'owner link must require confirmation')
 ok(classifyReply({ source: 'comment', fromMid: '999', text: '转账返利', owners }).mode === 'confirm', 'non-owner sensitive must require confirmation')
+const longExam = '19.（本小题满分17分）已知函数f(x)的定义域为R。'.repeat(12)
+ok(classifyReply({ source: 'dm', fromMid: '123', text: longExam, owners }).mode === 'direct', 'owner long exam question must be direct, not confirm')
+ok(classifyReply({ source: 'dm', fromMid: '999', text: longExam, owners }).mode === 'review', 'non-owner long low-risk DM must be review, not confirm')
 ok(classifyReply({ source: 'at', fromMid: '123', text: 'x', owners: { ...owners, activeSource: 'mutual' } }).mode === 'ignore', 'inactive source owner must not be privileged')
 ok(classifyReply({ source: 'dm', fromMid: '123', text: 'x', owners: { activeSource: 'manual', members: [{ ...owners.members[0], enabled: false }] } }).mode === 'review', 'disabled owner must not be privileged')
 
