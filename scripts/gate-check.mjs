@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
-const scripts = ['verify-bundle.mjs', 'verify-skeleton.mjs', 'verify-store.mjs', 'verify-auth.mjs', 'verify-content.mjs', 'verify-owner.mjs', 'verify-policy.mjs', 'verify-fallback.mjs', 'verify-cu.mjs', 'verify-02-runtime.mjs', 'verify-migration.mjs', 'verify-install.mjs']
+const scripts = ['verify-bundle.mjs', 'verify-skeleton.mjs', 'verify-store.mjs', 'verify-auth.mjs', 'verify-content.mjs', 'verify-owner.mjs', 'verify-policy.mjs', 'verify-fallback.mjs', 'verify-cu.mjs', 'verify-02-runtime.mjs', 'verify-02-candidate.mjs', 'verify-migration.mjs', 'verify-install.mjs']
 const failures = []
 
 for (const script of scripts) {
