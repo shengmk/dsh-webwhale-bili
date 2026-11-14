@@ -34,6 +34,10 @@ assert.match(query, /^2026年/)
 assert.match(query, /新高考一卷/)
 assert.match(query, /答案 解析$/)
 
+const exactExamQuestion = '19.（本小题满分17分）已知函数f(x)的定义域为R，且当x<0时，f(x)=2^x。对任意x0∈R，定义集合D(x0)={d∈R | f(x0+d)>f(x0)}。（1）若当x≥0时，f(x)=1-x，求D(-1)；（2）若f(x)是奇函数，f(x1)≤f(x2)，且x1x2<0，证明：D(x2)⊆D(x1)；（3）设f(x)满足：①若f(x1)≤f(x2)，则D(x2)⊆D(x1)；②当0<x<1时，f(x)<f(0)。（ⅰ）证明：0∉D(0)；（ⅱ）证明：f(x)在区间(0,+∞)上单调递增。'
+assert.equal(needsWebSearch(exactExamQuestion), true)
+assert.match(searchQueryFor(exactExamQuestion), /答案 解析$/)
+
 const parsed360 = parse360Results(html360)
 assert.equal(parsed360.length, 2)
 assert.equal(parsed360[0].title, '2026年新高考一卷数学第19题解析')
@@ -85,6 +89,12 @@ try {
   assert.ok(noSearch)
   assert.equal(calls.length, 4)
   assert.ok(!calls[3].startsWith('https://www.so.com/s'))
+
+  await chat.reply({ talkerId: '45', name: '测试', text: '26年新一卷高考数学19题解题过程你给我写一下', settings: { webSearch: false } })
+  const beforeFollowUp = calls.length
+  await chat.reply({ talkerId: '45', name: '测试', text: '这个题答案是什么', settings: { webSearch: true } })
+  assert.equal(calls.length, beforeFollowUp + 2)
+  assert.ok(calls[beforeFollowUp].includes(encodeURIComponent('2026年新高考一卷')))
 
   const first = await searchWeb('26年高考数学题', { fetchImpl: fakeFetch })
   assert.equal(first.ok, true)
