@@ -11,3 +11,7 @@ dev_id
 dist/
 release/
 /CON
+
+# Python
+__pycache__/
+*.pyc
