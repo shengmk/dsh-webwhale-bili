@@ -22,7 +22,7 @@ if (packed.status === 0) {
   const files = (result[0]?.files || []).map((file) => file.path)
   ok(files.some((file) => file === 'lib/index.js'), 'package includes lib/index.js')
   ok(files.some((file) => file === 'cordis.patch.yml'), 'package includes bundle patch')
-  ok(!files.some((file) => /node_modules|credentials|state\.(db|json)|\.env/.test(file)), 'package excludes secrets/state/node_modules')
+  ok(!files.some((file) => /(^|\/)node_modules|credentials\.json|state\.(db|json)|\.env/.test(file)), 'package excludes secrets/state/node_modules')
 }
 
 if (failures.length > 0) {

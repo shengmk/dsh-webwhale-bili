@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)))
-const scripts = ['verify-bundle.mjs', 'verify-skeleton.mjs', 'verify-store.mjs', 'verify-auth.mjs', 'verify-content.mjs', 'verify-owner.mjs', 'verify-policy.mjs', 'verify-fallback.mjs', 'verify-cu.mjs', 'verify-02-runtime.mjs', 'verify-02-candidate.mjs', 'verify-02-comment-flow.mjs', 'verify-02-mentions.mjs', 'verify-02-quota.mjs', 'verify-02-worker-guard.mjs', 'verify-02-model.mjs', 'verify-02-image.mjs', 'verify-02-dedupe.mjs', 'verify-02-websearch.mjs', 'verify-video.mjs', 'verify-migration.mjs', 'verify-install.mjs']
+const scripts = ['verify-bundle.mjs', 'verify-skeleton.mjs', 'verify-store.mjs', 'verify-auth.mjs', 'verify-content.mjs', 'verify-owner.mjs', 'verify-policy.mjs', 'verify-fallback.mjs', 'verify-cu.mjs', 'verify-02-runtime.mjs', 'verify-02-candidate.mjs', 'verify-02-comment-flow.mjs', 'verify-02-mentions.mjs', 'verify-02-quota.mjs', 'verify-02-worker-guard.mjs', 'verify-02-model.mjs', 'verify-02-image.mjs', 'verify-02-dedupe.mjs', 'verify-02-websearch.mjs', 'verify-02-late-credentials.mjs', 'verify-02-fallback.mjs', 'verify-video.mjs', 'verify-migration.mjs', 'verify-install.mjs']
 const failures = []
 
 for (const script of scripts) {
